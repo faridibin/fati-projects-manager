@@ -13872,7 +13872,7 @@ i.material-icons.h4 {
 }
 
 .fullscreen {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
 }

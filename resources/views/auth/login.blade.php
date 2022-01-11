@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -68,6 +68,29 @@
                 </div>
             </div>
         </div>
+    </div>
+</div> --}}
+<div class="col-xl-5 col-lg-6 col-md-7">
+    <div class="text-center">
+        <h1 class="h2">Welcome Back &#x1f44b;</h1>
+        <p class="lead">Log in to your account to continue</p>
+        <form>
+            <div class="form-group">
+                <input class="form-control" type="email" placeholder="Email Address" name="login-email" />
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" name="login-password" />
+                <div class="text-right">
+                    <small><a href="#">Forgot password?</a>
+                    </small>
+                </div>
+            </div>
+            <button class="btn btn-block btn-primary" role="button" type="submit">
+            Log in
+            </button>
+            <small>Don't have an account yet? <a href="#">Create one</a>
+            </small>
+        </form>
     </div>
 </div>
 @endsection

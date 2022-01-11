@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -23,9 +23,13 @@
     <div id="app">
         @include('layouts.partials.navbar')
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="main-container fullscreen">
+            <div class="container">
+                <div class="row justify-content-center">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

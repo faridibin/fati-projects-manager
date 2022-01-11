@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Conversation;
+use App\Models\Checklist;
 use Illuminate\Http\Request;
 
-class ConversationController extends Controller
+class ChecklistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ConversationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Conversation  $conversation
+     * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function show(Conversation $conversation)
+    public function show(Checklist $checklist)
     {
         //
     }
@@ -52,10 +52,10 @@ class ConversationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Conversation  $conversation
+     * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Conversation $conversation)
+    public function edit(Checklist $checklist)
     {
         //
     }
@@ -64,10 +64,10 @@ class ConversationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Conversation  $conversation
+     * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Conversation $conversation)
+    public function update(Request $request, Checklist $checklist)
     {
         //
     }
@@ -75,10 +75,10 @@ class ConversationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Conversation  $conversation
+     * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Conversation $conversation)
+    public function destroy(Checklist $checklist)
     {
         //
     }

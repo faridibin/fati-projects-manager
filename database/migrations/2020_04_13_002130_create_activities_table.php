@@ -15,7 +15,13 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
+            $table->enum('action', ['start', 'complete', 'join', 'assign', 'leave', 'remove', 'add', 'edit', 'delete', 'move']);
+            $table->enum('type', ['project', 'task', 'note', 'checklist', 'file']);
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('object_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -9,9 +9,9 @@ use Laravel\Passport\HasApiTokens;
 use Laravelista\Comments\Commenter;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, MustVerifyEmail, LaratrustUserTrait, Commenter;
+    use HasApiTokens, Notifiable, LaratrustUserTrait, Commenter;
 
     /**
      * The attributes that are mass assignable.

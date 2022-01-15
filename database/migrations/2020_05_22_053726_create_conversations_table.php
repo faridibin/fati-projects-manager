@@ -15,7 +15,16 @@ class CreateConversationsTable extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['single', 'group'])->default('single');
+            $table->string('name')->nullable();
+            $table->longText('description')->nullable();
+            $table->unsignedBigInteger('display_picture')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('display_picture')->references('id')->on('files');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

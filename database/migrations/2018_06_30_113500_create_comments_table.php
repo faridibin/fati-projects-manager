@@ -20,9 +20,6 @@ class CreateCommentsTable extends Migration
             $table->string('commenter_type')->nullable();
             $table->index(["commenter_id", "commenter_type"]);
 
-            $table->string('guest_name')->nullable();
-            $table->string('guest_email')->nullable();
-
             $table->string("commentable_type");
             $table->string("commentable_id");
             $table->index(["commentable_type", "commentable_id"]);

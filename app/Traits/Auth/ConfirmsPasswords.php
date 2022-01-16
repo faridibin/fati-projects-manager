@@ -2,8 +2,8 @@
 
 namespace App\Traits\Auth;
 
+use App\Http\Requests\Auth\Password\Confirm;
 use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 trait ConfirmsPasswords
@@ -23,18 +23,18 @@ trait ConfirmsPasswords
     /**
      * Confirm the given user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request|App\Http\Requests\Auth\Password\Confirm  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function confirm(Request $request)
+    public function confirm(Confirm $request)
     {
-        $request->validate($this->rules(), $this->validationErrorMessages());
+        if ($request->has('to')) {
+            $this->redirectTo = $request->to;
+        }
 
         $this->resetPasswordConfirmationTimeout($request);
 
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->intended($this->redirectPath());
+        return $request->isJson() ? response()->json(['intended' => $this->redirectPath()]) : redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -46,27 +46,5 @@ trait ConfirmsPasswords
     protected function resetPasswordConfirmationTimeout(Request $request)
     {
         $request->session()->put('auth.password_confirmed_at', time());
-    }
-
-    /**
-     * Get the password confirmation validation rules.
-     *
-     * @return array
-     */
-    protected function rules()
-    {
-        return [
-            'password' => 'required|password',
-        ];
-    }
-
-    /**
-     * Get the password confirmation validation error messages.
-     *
-     * @return array
-     */
-    protected function validationErrorMessages()
-    {
-        return [];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Traits\Auth;
 
+use App\Http\Requests\Auth\Login;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +13,16 @@ use Illuminate\Validation\ValidationException;
 trait AuthenticatesUsers
 {
     use RedirectsUsers, ThrottlesLogins;
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
 
     /**
      * Show the application's login form.
@@ -26,15 +37,13 @@ trait AuthenticatesUsers
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request|App\Http\Requests\Auth\Login  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function login(Request $request)
+    public function login(Login $request)
     {
-        $this->validateLogin($request);
-
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -48,10 +57,6 @@ trait AuthenticatesUsers
         }
 
         if ($this->attemptLogin($request)) {
-            if ($request->hasSession()) {
-                $request->session()->put('auth.password_confirmed_at', time());
-            }
-
             return $this->sendLoginResponse($request);
         }
 
@@ -61,22 +66,6 @@ trait AuthenticatesUsers
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
-    }
-
-    /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
     }
 
     /**
@@ -134,7 +123,18 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        // Check if 2fA is enabled
+        // if ($user->password_verified_at && $user->settings) {
+        //     \event(new Send2Fa($user));
+        // }
+
+        if ($request->isJson()) {
+            return response()->json([
+                'user' => $user,
+                'token' => $user->createToken('')->accessToken,
+                'intended' => $this->redirectPath(),
+            ]);
+        }
     }
 
     /**
@@ -150,16 +150,6 @@ trait AuthenticatesUsers
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);
-    }
-
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return 'email';
     }
 
     /**
@@ -183,6 +173,24 @@ trait AuthenticatesUsers
         return $request->wantsJson()
             ? new JsonResponse([], 204)
             : redirect('/');
+
+
+
+        // $user = Auth::guard('api')->user() ?: Auth::guard()->user();
+
+        // $user->update(['two_factor_verified_at' => null]);
+
+        // $this->guard()->logout();
+
+        // if ($request->isJson() || $request->wantsJson()) {
+        //     return response()->json([
+        //         'message' => 'session ended',
+        //     ]);
+        // }
+
+        // $request->session()->invalidate();
+
+        // return $this->loggedOut($request) ?: redirect('/login');
     }
 
     /**

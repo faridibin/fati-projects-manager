@@ -20,14 +20,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div class="container-fluid px-0 " id="app">
         @include('layouts.partials.navbar')
 
-        <div class="main-container fullscreen">
-            <div class="container">
-                <div class="row justify-content-center">
-                    @yield('content')
-                </div>
+        <div class="auth-wrapper">
+            <div class="row align-items-stretch justify-content-center mx-auto">
+                @yield('content')
             </div>
         </div>
     </div>

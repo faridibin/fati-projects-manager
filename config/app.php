@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \Faridibin\LaravelJsonResponse\Providers\LaravelJsonResponseProvider::class,
 
         /*
          * Application Service Providers...

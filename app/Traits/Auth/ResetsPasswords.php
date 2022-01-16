@@ -2,16 +2,14 @@
 
 namespace App\Traits\Auth;
 
+use App\Http\Requests\Auth\Password\Reset;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 
 trait ResetsPasswords
 {
@@ -37,13 +35,11 @@ trait ResetsPasswords
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request|\App\Http\Requests\Auth\Password\Reset  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function reset(Request $request)
+    public function reset(Reset $request)
     {
-        $request->validate($this->rules(), $this->validationErrorMessages());
-
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
@@ -60,30 +56,6 @@ trait ResetsPasswords
         return $response == Password::PASSWORD_RESET
             ? $this->sendResetResponse($request, $response)
             : $this->sendResetFailedResponse($request, $response);
-    }
-
-    /**
-     * Get the password reset validation rules.
-     *
-     * @return array
-     */
-    protected function rules()
-    {
-        return [
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ];
-    }
-
-    /**
-     * Get the password reset validation error messages.
-     *
-     * @return array
-     */
-    protected function validationErrorMessages()
-    {
-        return [];
     }
 
     /**
@@ -105,7 +77,7 @@ trait ResetsPasswords
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword||\Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword|\Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  string  $password
      * @return void
      */
@@ -118,8 +90,6 @@ trait ResetsPasswords
         $user->save();
 
         event(new PasswordReset($user));
-
-        $this->guard()->login($user);
     }
 
     /**
@@ -143,12 +113,16 @@ trait ResetsPasswords
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        if ($request->wantsJson()) {
-            return new JsonResponse(['message' => trans($response)], 200);
+        $request->session()->flash('success', trans($response));
+
+        if ($request->isJson()) {
+            return response()->json([
+                'message' => trans($response),
+                'intended' => $this->redirectPath(),
+            ]);
         }
 
-        return redirect($this->redirectPath())
-            ->with('status', trans($response));
+        return redirect($this->redirectPath())->with('status', trans($response));
     }
 
     /**
@@ -160,15 +134,14 @@ trait ResetsPasswords
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        if ($request->wantsJson()) {
-            throw ValidationException::withMessages([
-                'email' => [trans($response)],
-            ]);
+        if ($request->isJson()) {
+            return response()->json([
+                'message' => "The given data was invalid.",
+                'errors' => ['email' => [trans($response)]]
+            ], 401);
         }
 
-        return redirect()->back()
-            ->withInput($request->only('email'))
-            ->withErrors(['email' => trans($response)]);
+        return redirect()->back()->withInput($request->only('email'))->withErrors(['email' => trans($response)]);
     }
 
     /**

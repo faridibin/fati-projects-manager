@@ -1,0 +1,38 @@
+name: fati projects manager
+
+on:
+  push:
+    branches: [master, develpment]
+  pull_request:
+    branches: [master]
+
+jobs:
+  fati-projects-manager-tests:
+    runs-on: ubuntu-latest
+    container: kirschbaumdevelopment/laravel-test-runner:7.4
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run: |
+          composer install --no-scripts
+
+      - name: Prepare Fati Projects Manager
+        run: |
+          cp .env.ci .env
+          php artisan setup --seed
+
+      - name: Run Testsuite
+        env:
+          APP_KEY: ${{ secrets.APP_KEY }}
+        run: php artisan test

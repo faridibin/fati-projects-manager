@@ -59,4 +59,16 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
     }
+
+    /**
+     * Test all validation rules fail.
+     *
+     * @return void
+     */
+    public function testAllValidationRulesFail()
+    {
+        $response = $this->postJson('/api/auth/login');
+
+        $response->assertStatus(422);
+    }
 }

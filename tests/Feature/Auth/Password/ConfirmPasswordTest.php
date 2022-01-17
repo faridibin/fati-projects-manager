@@ -13,7 +13,7 @@ class ConfirmPasswordTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * A basic feature test example.
+     * Test user can confirm password.
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class ConfirmPasswordTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test user cannot confirm wrong password.
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class ConfirmPasswordTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test user cannot confirm password if not authenticated.
      *
      * @return void
      */
@@ -54,5 +54,19 @@ class ConfirmPasswordTest extends TestCase
         $response = $this->postJson('/api/auth/password/confirm');
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * Test all validation rules fail.
+     *
+     * @return void
+     */
+    public function testAllValidationRulesFail()
+    {
+        Passport::actingAs(User::factory()->create());
+
+        $response = $this->postJson('/api/auth/password/confirm');
+
+        $response->assertStatus(422);
     }
 }

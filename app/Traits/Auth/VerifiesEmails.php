@@ -81,16 +81,18 @@ trait VerifiesEmails
      */
     public function resend(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return $request->wantsJson()
-                ? new JsonResponse([], 204)
-                : redirect($this->redirectPath());
+        $user = ($request->isJson()) ? auth('api')->user() : $request->user();
+
+        if ($user->hasVerifiedEmail()) {
+            if ($request->isJson()) {
+                return response()->json(['hasVerifiedEmail' => true], 200);
+            }
+
+            return redirect($this->redirectPath());
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
-        return $request->wantsJson()
-            ? new JsonResponse([], 202)
-            : back()->with('resent', true);
+        return ($request->isJson()) ? response()->json(['resent' => true, 'message' => trans('auth.verify')], 200) : back()->with('resent', true);
     }
 }

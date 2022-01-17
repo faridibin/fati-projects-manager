@@ -35,4 +35,8 @@ jobs:
       - name: Run Testsuite
         env:
           APP_KEY: ${{ secrets.APP_KEY }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
+          MAIL_FROM_NAME: ${{ secrets.APP_NAME }}
         run: php artisan test

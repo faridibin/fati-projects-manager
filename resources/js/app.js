@@ -1,4 +1,5 @@
 import store from './store'
+import router from './router'
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -32,6 +33,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const app = new Vue({
     el: '#app',
     store,
+    router,
     beforeCreate() {
         store.dispatch('user/attemptGetUser')
     }

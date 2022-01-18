@@ -1,5 +1,5 @@
 @extends('layouts.auth')
 
 @section('content')
-<reset/>
+<reset token="{{ $token }}" email="{{ $email }}"/>
 @endsection

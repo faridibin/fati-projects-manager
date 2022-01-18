@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +24,10 @@ Route::middleware(['auth'])->prefix('/')->group(function () {
     //     Route::get('resend', 'Auth\Verify2FaToken@resend_token')->name('2fa.resend');
     // });
 
-    // Route::middleware(['verified', 'password.verified', '2fa.verify'])->group(function () {
-    //     Route::prefix('app')->group(function () {
-    //         Route::get('{path}', 'Dashboard\DashboardController')->where('path', '([A-Za-z\d\-\/_.]+)?')->name('dashboard');
-    //     });
-    // });
+    // 'password.verified', '2fa.verify'
+    Route::middleware(['verified'])->group(function () {
+        Route::prefix('app')->group(function () {
+            Route::get('{path}', 'Dashboard\DashboardController')->where('path', '([A-Za-z\d\-\/_.]+)?')->name('dashboard');
+        });
+    });
 });

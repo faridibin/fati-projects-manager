@@ -1,5 +1,9 @@
 <template>
-    <div class="col-xl-5 col-lg-6 col-md-7">
+    <div class="col-lg-5 col-md-7">
+        <div v-if="form.successful" class="alert alert-success" role="alert">
+            We have emailed your password reset link!
+        </div>
+
         <h1 class="h2">Forgot password &#x1f62B;</h1>
         <p class="lead">Enter your email address to reset</p>
 
@@ -9,22 +13,34 @@
                 <has-error :form="form" field="email"/>
             </div>
 
-            <button class="btn btn-block btn-primary" role="button" type="submit">Send reset link</button>
+            <button-component :is-block="true">Send reset link</button-component>
 
-            <small>Back to <a href="/login">Login</a></small>
+            <small v-if="!isAuthenticated">Back to <a href="/login">Login</a></small>
         </form>
     </div>
 </template>
 
 <script>
+	import { mapGetters, mapActions } from "vuex";
+
 	export default {
 		data: () => ({
 			form: new Form({
 				email: null,
 			}),
 		}),
+		computed: {
+			...mapGetters({
+				isAuthenticated: "auth/isAuthenticated",
+			}),
+		},
 		methods: {
-			email: () => {},
+			...mapActions({
+				attemptForgotPassword: "auth/attemptForgotPassword",
+			}),
+			email() {
+				this.attemptForgotPassword(this.form).then(() => this.form.reset());
+			},
 		},
 	};
 </script>

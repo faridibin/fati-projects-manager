@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xl-5 col-lg-6 col-md-7">
+    <div class="col-lg-5 col-md-7">
         <h1 class="h2">Welcome Back &#x1f44b;</h1>
         <p class="lead">Log in to your account to continue</p>
 
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-block btn-primary" role="button" type="submit">Log in</button>
+            <button-component :is-block="true">Log in</button-component>
 
             <small>Don't have an account yet? <a href="/register">Create one</a></small>
         </form>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+	import { mapActions } from "vuex";
+
 	export default {
 		data: () => ({
 			form: new Form({
@@ -31,7 +33,12 @@
 			}),
 		}),
 		methods: {
-			login: () => {},
+			...mapActions({
+				attemptLogin: "auth/attemptLogin",
+			}),
+			login() {
+				this.attemptLogin(this.form);
+			},
 		},
 	};
 </script>

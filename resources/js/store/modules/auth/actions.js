@@ -12,15 +12,11 @@ export default {
 
         if (success) {
             const {
-                user,
                 token,
                 intended
             } = response
 
-            commit('SET', {
-                user,
-                token
-            })
+            commit('SET_TOKEN', token)
 
             window.location = intended
         }

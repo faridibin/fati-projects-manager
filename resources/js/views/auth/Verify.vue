@@ -1,33 +1,38 @@
 <template>
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+    <div class="col-xl-6 col-lg-5 col-md-7">
+        <div v-if="form.successful" class="alert alert-success" role="alert">
+            A fresh verification link has been sent to your email address.
+        </div>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+        <div class="card">
+            <form class="card-body" @submit.prevent="verify" @keydown="form.onKeydown($event)">
+                <h5 class="card-title">Verify Your Email Address</h5>
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
-            </div>
+                <p class="card-text">
+                    Before proceeding, please check your email for a verification link.
+                    If you did not receive the email click <a href="/email/verify" @click.prevent="verify">here</a> to request another.
+                </p>
+            </form>
         </div>
     </div>
-</div> -->
-    <div></div>
 </template>
 
 <script>
-	export default {};
+	import { mapActions } from "vuex";
+
+	export default {
+		data: () => ({
+			form: new Form({}),
+		}),
+		methods: {
+			...mapActions({
+				attemptVerification: "auth/attemptVerification",
+			}),
+			verify() {
+				this.attemptVerification(this.form);
+			},
+		},
+	};
 </script>
 
 <style>

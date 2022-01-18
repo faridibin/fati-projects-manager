@@ -29,9 +29,10 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// store.dispatch('user/attemptGet', localStorage.getItem('token')).then(() => {
 const app = new Vue({
     el: '#app',
-    store
+    store,
+    beforeCreate() {
+        store.dispatch('user/attemptGetUser')
+    }
 });
-// })

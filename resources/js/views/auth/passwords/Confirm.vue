@@ -1,54 +1,45 @@
 <template>
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+    <div class="col-lg-5 col-md-7">
+        <h1 class="h2">Confirm Password &#x1F510;</h1>
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <form @submit.prevent="confirm" @keydown="form.onKeydown($event)">
+            <div class="form-group">
+                <input v-model="form.password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }" type="password" placeholder="Password" autocomplete="current-password"/>
+                <has-error :form="form" field="password"/>
             </div>
-        </div>
+
+            <button-component :is-block="true">Confirm password</button-component>
+
+            <small>Note: We won’t ask for your password again for a few hours. <a href="/password/reset">Forgot password?</a></small>
+        </form>
     </div>
-</div> -->
-    <div></div>
 </template>
 
 <script>
-	export default {};
+	import { mapActions } from "vuex";
+
+	export default {
+		data: () => ({
+			form: new Form({
+				password: null,
+			}),
+		}),
+		methods: {
+			...mapActions({
+				attemptConfirmPassword: "auth/attemptConfirmPassword",
+			}),
+			confirm() {
+				this.form.update({
+					intended: this.intended,
+				});
+
+				this.attemptConfirmPassword(this.form);
+			},
+		},
+		props: {
+			intended: { type: String, default: "/app/dashboard" },
+		},
+	};
 </script>
 
 <style>

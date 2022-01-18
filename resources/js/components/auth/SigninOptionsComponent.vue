@@ -1,5 +1,5 @@
 <template>
-    <div class="signin-options">
+    <div v-if="enabled" class="signin-options">
         <button class="btn btn-block btn-primary">
             <!-- <img alt="Google" src="assets/img/logo-google.svg" class="rounded align-top mr-2"/> -->
             Continue with Google
@@ -8,7 +8,14 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		props: {
+			enabled: {
+				type: Boolean,
+				default: false,
+			},
+		},
+	};
 </script>
 
 <style lang="scss" scoped>

@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid px-0 " id="app">
+    <div class="container-fluid px-0" id="app">
         @include('layouts.partials.navbar')
 
         <div class="auth-wrapper">

@@ -6,7 +6,7 @@
 // Auth Layout
 .auth-wrapper {
     margin: 10rem auto;
-    width: 50%;
+    width: 60%;
     text-align: center !important;
 
     @media screen and (max-width:1024px) {
@@ -16,4 +16,11 @@
     @media screen and (max-width:425px) {
         width: 100%;
     }
+}
+
+// Navbar
+// // Dashboard
+#searchNavbar,
+#addNewDropdown {
+    margin: 0.3rem 0;
 }

@@ -8,7 +8,6 @@ import {
     AlertSuccess
 } from 'vform/src/components/bootstrap4'
 
-
 Vue.component(Button.name, Button)
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)

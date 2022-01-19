@@ -79,7 +79,7 @@
                 height: 100%;
                 overflow-y: scroll;
                 -ms-overflow-style: none;
-                padding: $spacer*2;
+                padding: $spacer*2 $spacer*8;
 
                 &::-webkit-scrollbar {
                     display: none;

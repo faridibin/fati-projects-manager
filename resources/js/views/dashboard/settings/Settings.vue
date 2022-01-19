@@ -17,3 +17,11 @@
         <router-view></router-view>
     </div>
 </template>
+
+<style lang="scss" scoped>
+	.nav-tabs {
+		@media screen and (max-width: 768px) {
+			border-radius: 0;
+		}
+	}
+</style>

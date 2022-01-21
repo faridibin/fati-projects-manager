@@ -24,5 +24,21 @@ export default {
             commit('SET_USER', user)
         }
     },
+    attemptUpdateUser: async ({
+        commit
+    }, form) => {
+        const {
+            success,
+            data: {
+                user
+            }
+        } = await form.patch('/api/user').then(({
+            data
+        }) => data)
 
+        if (success) {
+            commit('SET_USER', user)
+        }
+    },
+    attemptChangePassword: async (_, form) => form.post('/api/user/password')
 }

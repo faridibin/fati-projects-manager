@@ -1,5 +1,5 @@
 export default {
-    isAuthenticated(state) {
+    isAuthenticated: (state) => {
         return !state.token === null
     },
     token: (state) => {

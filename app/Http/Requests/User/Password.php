@@ -27,7 +27,7 @@ class Password extends FormRequest
     {
         return [
             'current_password' => ['required', new IsCurrentPassword($this->user()->password)],
-            'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{6,}$/i', Rules\Password::defaults()]
+            'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{6,}$/i', Rules\Password::defaults()->rules([]), 'confirmed']
         ];
     }
 }

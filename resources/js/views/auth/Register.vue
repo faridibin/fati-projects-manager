@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <button-component :is-block="true">Create account</button-component>
+                <button-component :is-block="true">Create Account</button-component>
 
                 <small>By clicking 'Create Account' you agree to our <a href="#">Terms of Use</a></small>
             </form>

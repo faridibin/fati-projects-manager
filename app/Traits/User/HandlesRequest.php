@@ -25,8 +25,10 @@ trait HandlesRequest
      */
     protected function update(Request $request)
     {
-        $request->user()->update($request->validated());
+        $updated = $request->user()->update($request->validated());
 
-        return $request->user();
+        return response()->json($updated ? $request->user() : [
+            'message' => 'An error occured.',
+        ], ($updated) ? 200 : 500);
     }
 }

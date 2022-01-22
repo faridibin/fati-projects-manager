@@ -21,7 +21,7 @@
 
 	export default {
 		data: () => ({
-			form: Form.make({
+			form: new Form({
 				file: null,
 			}),
 		}),

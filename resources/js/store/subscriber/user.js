@@ -1,3 +1,5 @@
+import store from "../index"
+
 export default (mutation) => {
     const {
         type,
@@ -7,10 +9,13 @@ export default (mutation) => {
     switch (type) {
         case 'user/SET_USER':
             if (payload) {
-                // console.log(payload)
-                // localStorage.setItem('user', JSON.stringify(payload))
+                const {
+                    profile_picture
+                } = payload
 
-                // return
+                store.commit('user/SET_AVATAR', profile_picture)
+
+                return
             }
             break
         default:

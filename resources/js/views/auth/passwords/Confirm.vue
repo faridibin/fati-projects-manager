@@ -8,7 +8,7 @@
                 <has-error :form="form" field="password"/>
             </div>
 
-            <button-component :is-block="true">Confirm password</button-component>
+            <button-component :is-block="true">Confirm Password</button-component>
 
             <small>Note: We won’t ask for your password again for a few hours. <a href="/password/reset">Forgot password?</a></small>
         </form>

@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <button-component :is-block="true">Log in</button-component>
+            <button-component :is-block="true">Login</button-component>
 
             <small>Don't have an account yet? <a href="/register">Create one</a></small>
         </form>

@@ -15,7 +15,7 @@
                 <has-error :form="form" field="password_confirmation"/>
             </div>
 
-            <button-component :is-block="true">Reset password</button-component>
+            <button-component :is-block="true">Reset Password</button-component>
         </form>
     </div>
 </template>

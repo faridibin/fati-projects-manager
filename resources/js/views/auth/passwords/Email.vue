@@ -13,7 +13,7 @@
                 <has-error :form="form" field="email"/>
             </div>
 
-            <button-component :is-block="true">Send reset link</button-component>
+            <button-component :is-block="true">Send Reset Link</button-component>
 
             <small v-if="!isAuthenticated">Back to <a href="/login">Login</a></small>
         </form>

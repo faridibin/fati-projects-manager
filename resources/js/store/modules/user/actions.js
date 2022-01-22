@@ -40,5 +40,8 @@ export default {
             commit('SET_USER', user)
         }
     },
+    attemptUpdateAvatar: async (_, form) => {
+        console.log(form)
+    },
     attemptChangePassword: async (_, form) => form.post('/api/user/password')
 }

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Avatar;
 use App\Http\Requests\User\Password;
 use App\Http\Requests\User\Request as UserRequest;
-use App\Models\File;
 use App\Traits\User\HandlesRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -72,7 +72,9 @@ class UserController extends Controller
      */
     public function password(Password $request)
     {
-        $changed = $request->user()->update([
+        $user = $request->user();
+
+        $changed = $user->update([
             'password' => Hash::make($request->password)
         ]);
 

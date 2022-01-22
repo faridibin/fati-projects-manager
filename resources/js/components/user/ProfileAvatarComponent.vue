@@ -2,7 +2,7 @@
     <div class="media mb-2">
         <img alt="avatar" ref="avatar" :src="avatar" class="avatar avatar-lg"/>
 
-        <div class="media-body ml-3">
+        <form enctype="multipart/form-data" class="media-body ml-3">
             <div class="custom-file custom-file-naked d-block mb-1">
                 <input  accept="image/*" @change="save" type="file" class="custom-file-input d-none" id="avatar-file">
                 <label class="custom-file-label position-relative" for="avatar-file">
@@ -12,7 +12,7 @@
             </div>
             <small v-if="form.success" class="text-success d-block">Your avatar has been updated.</small>
             <small>For best results, use an image at least 256px by 256px in either .jpg or .png format</small>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -22,7 +22,6 @@
 	export default {
 		data: () => ({
 			form: Form.make({
-				name: "avatar",
 				file: null,
 			}),
 		}),
@@ -45,11 +44,11 @@
 						this.$refs.avatar.src = reader.result;
 
 						this.form.file = file;
+
+						this.attemptUpdateAvatar(this.form);
 					});
 
 					reader.readAsDataURL(file);
-
-					this.attemptUpdateAvatar(this.form);
 				}
 			},
 		},

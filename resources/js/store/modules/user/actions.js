@@ -40,8 +40,25 @@ export default {
             commit('SET_USER', user)
         }
     },
-    attemptUpdateAvatar: async (_, form) => {
-        console.log(form)
+    attemptUpdateAvatar: async ({
+        commit
+    }, form) => {
+        const {
+            success,
+            data: {
+                file
+            }
+        } = await form.post('/api/user/profile-picture').then(({
+            data
+        }) => data)
+
+        if (success) {
+            const {
+                url
+            } = file
+
+            commit('SET_AVATAR', url)
+        }
     },
     attemptChangePassword: async (_, form) => form.post('/api/user/password')
 }

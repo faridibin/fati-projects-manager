@@ -48,13 +48,15 @@ class UserController extends Controller
         $path = $request->file('file')->storeAs($destination, $name, \config('filesystems.default'));
 
         if ($path) {
-            $file = $user->profile_picture()->updateOrCreate(['name' => $user->email, 'object_id' => '', 'type' => 'profile_picture'], [
+            $file = $user->profile_picture()->updateOrCreate(['name' => $user->email, 'object_id' => $user->id, 'type' => 'profile_picture'], [
                 'path' => $path,
                 'url' => Storage::disk(\config('filesystems.default'))->url($path),
                 'size' => $request->file->getSize(),
                 'mime_type' => $request->file->getmimeType(),
                 'uploaded_by' => $user->id,
             ]);
+
+            $user->update(['profile_picture' => $file->id]);
 
             return response()->json(['message' => "Avatar changed successfully.", 'file' => $file], 200);
         }

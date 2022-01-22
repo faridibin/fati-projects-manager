@@ -25,8 +25,9 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::prefix('user')->group(function () {
+    Route::prefix('user')->name('user.')->group(function () {
         Route::post('password', 'Api\UserController@password')->name('password');
+        Route::post('profile-picture', 'Api\UserController@profile_picture')->name('profile-picture');
         Route::match(['GET', 'PATCH'], '/', 'Api\UserController');
     });
 });

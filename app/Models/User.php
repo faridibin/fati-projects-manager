@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Laravelista\Comments\Commenter;
 use Laratrust\Traits\LaratrustUserTrait;
+use Laravolt\Avatar\Avatar;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -26,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'location',
         'bio',
         'password',
+        'profile_picture'
     ];
 
     /**
@@ -52,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $appends = [
-        'name',
+        'name'
     ];
 
     /**
@@ -63,5 +65,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNameAttribute()
     {
         return "{$this->attributes['first_name']} {$this->attributes['last_name']}";
+    }
+
+    /**
+     * Get the user's avatar.
+     *
+     * @return string
+     */
+    public function getProfilePictureAttribute()
+    {
+        if ($this->has('profile_picture')->first()) {
+            return $this->profile_picture()->first()->url;
+        }
+
+        $avatar = new Avatar();
+
+        return $avatar->create($this->attributes['email'])->toGravatar(['s' => 256]);
+    }
+
+    /**
+     * Get the profile picture for the user.
+     */
+    public function profile_picture()
+    {
+        return $this->hasOne(File::class, 'object_id')->where('type', 'profile_picture');
     }
 }

@@ -20,9 +20,9 @@ class CreateFilesTable extends Migration
             $table->string('url');
             $table->string('size');
             $table->string('mime_type');
-            $table->enum('type', ['project', 'task', 'message']);
+            $table->enum('type', ['project', 'task', 'message', 'profile_picture'])->nullable();
             $table->unsignedBigInteger('uploaded_by');
-            $table->unsignedBigInteger('object_id');
+            $table->unsignedBigInteger('object_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -1,8 +1,18 @@
+import default_avatar from '../../../../img/default_avatar.png'
+
 export default {
     user: (state) => {
         return state.user
     },
     avatar: (state) => {
-        return state.avatar
+        const {
+            avatar
+        } = state
+
+        if (avatar) {
+            return avatar
+        }
+
+        return default_avatar
     }
 }

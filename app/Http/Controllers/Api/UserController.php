@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Avatar;
 use App\Http\Requests\User\Password;
 use App\Http\Requests\User\Request as UserRequest;
+use App\Models\File;
 use App\Traits\User\HandlesRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -29,6 +32,37 @@ class UserController extends Controller
     }
 
     /**
+     * Store a newly created avatar in storage.
+     *
+     * @param  \App\Http\Requests\User\Avatar  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function profile_picture(Avatar $request)
+    {
+        $user = $request->user();
+
+        $name = "{$user->email}.{$request->file->extension()}";
+
+        $destination = \config('filesystems.folders.avatars');
+
+        $path = $request->file('file')->storeAs($destination, $name, \config('filesystems.default'));
+
+        if ($path) {
+            $file = $user->profile_picture()->updateOrCreate(['name' => $user->email, 'object_id' => '', 'type' => 'profile_picture'], [
+                'path' => $path,
+                'url' => Storage::disk(\config('filesystems.default'))->url($path),
+                'size' => $request->file->getSize(),
+                'mime_type' => $request->file->getmimeType(),
+                'uploaded_by' => $user->id,
+            ]);
+
+            return response()->json(['message' => "Avatar changed successfully.", 'file' => $file], 200);
+        }
+
+        return response()->json(['message' => 'An error occured.'], 500);
+    }
+
+    /**
      * Store a newly created password in storage.
      *
      * @param  \App\Http\Requests\User\Password  $request
@@ -36,10 +70,12 @@ class UserController extends Controller
      */
     public function password(Password $request)
     {
-        $request->user()->update([
+        $changed = $request->user()->update([
             'password' => Hash::make($request->password)
         ]);
 
-        return response()->json(['message' => trans('passwords.updated')]);
+        return response()->json([
+            'message' => ($changed) ? trans('passwords.updated') : 'An error occured.',
+        ], ($changed) ? 200 : 500);
     }
 }

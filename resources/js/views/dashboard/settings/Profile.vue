@@ -56,6 +56,9 @@
 	import { mapGetters, mapActions } from "vuex";
 
 	export default {
+		mounted() {
+			this.setData(this.user);
+		},
 		data: () => ({
 			form: new Form({
 				bio: null,
@@ -73,13 +76,16 @@
 		},
 		watch: {
 			user(data) {
-				this.form.update(data);
+				this.setData(data);
 			},
 		},
 		methods: {
 			...mapActions({
 				attemptUpdateUser: "user/attemptUpdateUser",
 			}),
+			setData(data) {
+				this.form.update(data);
+			},
 			save() {
 				this.attemptUpdateUser(this.form).then(() => this.form.reset());
 			},

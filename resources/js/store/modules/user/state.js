@@ -1,4 +1,4 @@
 export default {
     user: null,
+    avatar: null
 }
-// localStorage.getItem('token')

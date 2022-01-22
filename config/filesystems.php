@@ -93,6 +93,6 @@ return [
     */
 
     'folders' => [
-        'avatars' => 'avatars',
+        'avatars' => 'public/avatars',
     ],
 ];

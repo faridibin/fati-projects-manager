@@ -4,7 +4,7 @@
             <div class="card-body">
                 <form>
                     <h6>Activity Notifications</h6>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <div class="custom-control custom-checkbox custom-checkbox-switch">
                             <input type="checkbox" class="custom-control-input" id="notify-1" checked>
                             <label class="custom-control-label" for="notify-1">Someone assigns me to a task</label>
@@ -27,9 +27,9 @@
                             <input type="checkbox" class="custom-control-input" id="notify-4">
                             <label class="custom-control-label" for="notify-4">Activity on a project I am a member of</label>
                         </div>
-                    </div> -->
-                    <h6>Service Notifications</h6>
-                    <!-- <div class="form-group">
+                    </div>
+                    <!-- <h6>Service Notifications</h6>
+                    <div class="form-group">
                         <div class="custom-control custom-checkbox custom-checkbox-switch">
                             <input type="checkbox" class="custom-control-input" id="notify-5">
                             <label class="custom-control-label" for="notify-5">Monthly newsletter</label>

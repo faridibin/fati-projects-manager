@@ -23,6 +23,11 @@ export default {
         if (success) {
             commit('SET_USER', user)
         }
+
+        // console.log('Test')
+        // store.commit('auth/SET_TOKEN', null);
+
+        // return
     },
     attemptUpdateUser: async ({
         commit

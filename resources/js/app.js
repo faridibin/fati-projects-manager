@@ -9,6 +9,8 @@ import router from './router'
 
 require('./bootstrap');
 require('./imports');
+require('./filters')
+require('./directives')
 require('./store/subscriber')
 
 window.Vue = require('vue');

@@ -1,6 +1,6 @@
 <template>
     <div class="media mb-2">
-        <img alt="avatar" ref="avatar" :src="avatar" class="avatar avatar-lg"/>
+        <avatar-component :alt="'avatar'" :src="avatar" :size="'large'"></avatar-component>
 
         <form enctype="multipart/form-data" class="media-body ml-3">
             <div class="custom-file custom-file-naked d-block mb-1">

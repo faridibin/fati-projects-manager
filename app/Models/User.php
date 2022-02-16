@@ -49,6 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'settings'
+    ];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -89,5 +98,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile_picture()
     {
         return $this->hasOne(File::class, 'object_id')->where('type', 'profile_picture');
+    }
+
+    /**
+     * Get the settings associated with the user.
+     */
+    public function settings()
+    {
+        return $this->hasOne(Setting::class);
     }
 }

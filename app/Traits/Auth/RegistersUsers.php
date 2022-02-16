@@ -67,12 +67,16 @@ trait RegistersUsers
      */
     protected function create($request)
     {
-        return User::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $this->registered($request, $user);
+
+        return $user;
     }
 
     /**
@@ -84,6 +88,6 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+        $user->settings()->create(config('fati.defaults.settings.notifications'));
     }
 }

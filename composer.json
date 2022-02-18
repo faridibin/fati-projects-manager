@@ -1,14 +1,15 @@
 {
-    "name": "laravel/laravel",
+    "name": "faridibin/fati-projects-manager",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Open source project management software built with Laravel and Vue.js.",
     "keywords": [
-        "framework",
-        "laravel"
+        "projects",
+        "manager"
     ],
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "faridibin/laravel-json-response": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -20,10 +21,11 @@
         "laravel/ui": "^3.0",
         "laravelista/comments": "^4.5.0",
         "laravolt/avatar": "^4.1.5",
-        "santigarcor/laratrust": "^6.0",
         "maatwebsite/excel": "^3.1",
         "propaganistas/laravel-phone": "^4.3",
-        "rlanvin/php-rrule": "^2.3"
+        "rlanvin/php-rrule": "^2.3",
+        "santigarcor/laratrust": "^6.3",
+        "spatie/laravel-http-logger": "^1.8"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

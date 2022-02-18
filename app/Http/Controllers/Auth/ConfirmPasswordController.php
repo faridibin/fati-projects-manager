@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use App\Traits\Auth\ConfirmsPasswords;
 
 class ConfirmPasswordController extends Controller
 {
@@ -36,5 +36,6 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('throttle:6,1')->only('confirm');
     }
 }

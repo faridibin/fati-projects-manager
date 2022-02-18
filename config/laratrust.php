@@ -95,7 +95,7 @@ return [
         /**
          * Will be used only if the teams functionality is enabled.
          */
-        'team' => 'App\Team',
+        'team' => 'App\Models\Team',
     ],
 
     /*
@@ -213,7 +213,7 @@ return [
         | Please check the docs to see what you need to do in case you have the package already configured.
         |
         */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
         |--------------------------------------------------------------------------
@@ -226,7 +226,7 @@ return [
         | it will check only if the user has attached that role/permission ignoring the team.
         |
         */
-        'strict_check' => false,
+        'strict_check' => true,
     ],
 
     /*

@@ -13,3 +13,27 @@ Vue.filter('date.humanize', (value) => {
         }
     );
 })
+
+Vue.filter('trans', (value = null, key = null, replace = [], locale = 'en') => {
+    if (value && key) {
+        const [lang, ...options] = key.split('.');
+        let languageLines = require(`../lang/${locale}/${lang}`);
+        let text = null;
+
+        if (languageLines) {
+            options.forEach((option) => {
+                languageLines = languageLines[option]
+            });
+
+            text = languageLines[value]
+
+            if (replace.length) {
+                // TODO: write replace code
+            }
+
+            return text
+        }
+    }
+
+    return value
+})

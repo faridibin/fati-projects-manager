@@ -4,6 +4,9 @@ export default {
     user: (state) => {
         return state.user
     },
+    settings: (state) => {
+        return state.settings
+    },
     avatar: (state) => {
         const {
             avatar

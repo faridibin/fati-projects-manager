@@ -12,6 +12,8 @@ export default (mutation) => {
                 localStorage.setItem('token', payload)
 
                 return
+            } else {
+                localStorage.removeItem('token')
             }
             break
         default:

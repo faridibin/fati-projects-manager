@@ -9,21 +9,21 @@
                     <div class="form-group row align-items-center">
                         <label class="col-3">Current Password</label>
                         <div class="col">
-                            <input v-model="form.current_password" type="password" placeholder="Enter your current password" class="form-control" :class="{ 'is-invalid': form.errors.has('current_password') }"/>
+                            <input v-model="form.current_password" type="password" placeholder="Enter your current password" class="form-control" :class="{ 'is-invalid': form.errors.has('current_password') }" autocomplete="current-password"/>
                             <has-error :form="form" field="current_password"/>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="col-3">New Password</label>
                         <div class="col">
-                            <input v-model="form.password" type="password" placeholder="Enter a new password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }"/>
+                            <input v-model="form.password" type="password" placeholder="Enter a new password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }" autocomplete="new-password"/>
                             <has-error :form="form" field="password"/>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="col-3">Confirm Password</label>
                         <div class="col">
-                            <input v-model="form.password_confirmation" type="password" placeholder="Confirm your new password" class="form-control" :class="{ 'is-invalid': form.errors.has('password_confirmation') }"/>
+                            <input v-model="form.password_confirmation" type="password" placeholder="Confirm your new password" class="form-control" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" autocomplete="new-password"/>
                             <has-error :form="form" field="password_confirmation"/>
                         </div>
                     </div>

@@ -10,10 +10,12 @@ export default (mutation) => {
         case 'user/SET_USER':
             if (payload) {
                 const {
-                    profile_picture
+                    profile_picture,
+                    settings
                 } = payload
 
                 store.commit('user/SET_AVATAR', profile_picture)
+                store.commit('user/SET_SETTINGS', settings)
 
                 return
             }

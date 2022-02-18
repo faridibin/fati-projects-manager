@@ -22,12 +22,9 @@ export default {
 
         if (success) {
             commit('SET_USER', user)
+        } else {
+            store.commit('auth/SET_TOKEN', null);
         }
-
-        // console.log('Test')
-        // store.commit('auth/SET_TOKEN', null);
-
-        // return
     },
     attemptUpdateUser: async ({
         commit
@@ -65,5 +62,21 @@ export default {
             commit('SET_AVATAR', url)
         }
     },
-    attemptChangePassword: async (_, form) => form.post('/api/user/password')
+    attemptChangePassword: async (_, form) => form.post('/api/user/password'),
+    attemptUpdateNotificationSettings: async ({
+        commit
+    }, form) => {
+        const {
+            success,
+            data: {
+                settings
+            }
+        } = await form.patch('/api/user/settings').then(({
+            data
+        }) => data)
+
+        if (success) {
+            commit('SET_SETTINGS', settings)
+        }
+    },
 }

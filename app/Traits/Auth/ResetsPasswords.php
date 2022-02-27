@@ -2,6 +2,7 @@
 
 namespace App\Traits\Auth;
 
+use App\Events\Password\PasswordChanged;
 use App\Http\Requests\Auth\Password\Reset;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\RedirectsUsers;
@@ -89,7 +90,7 @@ trait ResetsPasswords
 
         $user->save();
 
-        event(new PasswordReset($user));
+        \event(new PasswordChanged($user));
     }
 
     /**

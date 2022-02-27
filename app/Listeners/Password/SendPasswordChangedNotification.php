@@ -28,8 +28,10 @@ class SendPasswordChangedNotification
      */
     public function handle(PasswordChanged $event)
     {
-        // TODO: Generate password error link
+        if ($event->notify) {
+            // TODO: Generate password error link
 
-        Mail::send(new PasswordChangedMail($event->user));
+            Mail::send(new PasswordChangedMail($event->user));
+        }
     }
 }

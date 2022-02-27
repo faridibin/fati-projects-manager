@@ -28,6 +28,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
         Route::post('password', 'Api\UserController@password')->name('password');
         Route::post('profile-picture', 'Api\UserController@profile_picture')->name('profile-picture');
-        Route::match(['GET', 'PATCH'], '/', 'Api\UserController');
+        Route::match(['PATCH', 'PUT'], 'settings', 'Api\UserController@settings')->name('settings');
+        Route::match(['GET', 'PATCH', 'PUT'], '/', 'Api\UserController');
     });
 });

@@ -20,5 +20,7 @@ return [
     'user' => "We can't find a user with that email address.",
     'current' => 'Your current password is invalid.',
     'updated' => 'Your password has been changed.',
+    'same' => 'Your new password cannot be the same as your current password.',
+    'history' => 'You cannot use an old password. Please use a new one.',
 
 ];

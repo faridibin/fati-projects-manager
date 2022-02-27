@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\User;
 
-use App\Rules\Password\IsCurrentPassword;
+use App\Rules\Auth\Password\IsCurrentPassword;
+use App\Rules\Auth\Password\IsInPasswordHistory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
 
@@ -26,8 +27,17 @@ class Password extends FormRequest
     public function rules()
     {
         return [
-            'current_password' => ['required', new IsCurrentPassword($this->user()->password)],
-            'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{6,}$/i', Rules\Password::defaults()->rules([]), 'confirmed']
+            'current_password' => [
+                'required',
+                new IsCurrentPassword($this->user()->password)
+            ],
+            'password' => [
+                'required',
+                new IsInPasswordHistory($this->user()->password_history),
+                'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-_]).{6,}$/i',
+                Rules\Password::defaults()->rules([]),
+                'confirmed'
+            ]
         ];
     }
 }

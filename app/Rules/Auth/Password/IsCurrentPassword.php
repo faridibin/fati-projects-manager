@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules\Password;
+namespace App\Rules\Auth\Password;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;

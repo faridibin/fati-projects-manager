@@ -2,6 +2,7 @@
 
 namespace App\Traits\Auth;
 
+use App\Events\Password\PasswordChanged;
 use App\Http\Requests\Auth\Register;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -89,5 +90,7 @@ trait RegistersUsers
     protected function registered(Request $request, $user)
     {
         $user->settings()->create(config('fati.defaults.settings.notifications'));
+
+        \event(new PasswordChanged($user, false));
     }
 }

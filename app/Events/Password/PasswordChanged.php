@@ -23,13 +23,24 @@ class PasswordChanged
     public $user;
 
     /**
+     * Should notify user.
+     *
+     * @var boolean $notify
+     */
+    public $notify;
+
+    /**
      * Create a new event instance.
+     *
+     * @var \App\Models\User $user
+     * @var boolean $notify
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $notify = true)
     {
         $this->user = $user;
+        $this->notify = $notify;
     }
 
     /**

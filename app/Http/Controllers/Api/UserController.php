@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\Password\PasswordChanged;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Avatar;
 use App\Http\Requests\User\Password;
 use App\Http\Requests\User\Request as UserRequest;
+use App\Http\Requests\User\Settings;
 use App\Traits\User\HandlesRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,7 +25,7 @@ class UserController extends Controller
      */
     public function __invoke(UserRequest $request)
     {
-        if ($request->isMethod('PATCH')) {
+        if ($request->isMethod('PATCH') || $request->isMethod('PUT')) {
             return $this->update($request);
         }
 
@@ -78,8 +79,31 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
+        if ($request->session()->has('password_hash_web')) {
+            session()->put(['password_hash_web' => $user->getAuthPassword()]);
+        }
+
+        \event(new PasswordChanged($user));
+
         return response()->json([
             'message' => ($changed) ? trans('passwords.updated') : 'An error occured.',
         ], ($changed) ? 200 : 500);
+    }
+
+    /**
+     * Update a user settings in storage.
+     *
+     * @param  \App\Http\Requests\User\Settings  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function settings(Settings $request)
+    {
+        $user = $request->user();
+
+        $updated = $user->settings()->update($request->validated());
+
+        return response()->json(($updated) ? $user->settings()->first() : [
+            'message' => 'An error occured.',
+        ], ($updated) ? 200 : 500);
     }
 }

@@ -107,4 +107,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Setting::class);
     }
+
+    /**
+     * Get the user's password history.
+     */
+    public function password_history()
+    {
+        return $this->hasMany(PasswordHistory::class);
+    }
 }
